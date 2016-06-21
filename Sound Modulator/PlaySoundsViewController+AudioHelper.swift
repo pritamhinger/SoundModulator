@@ -14,6 +14,7 @@ extension PlaySoundsViewController{
     enum PlayingState { case Playing, NotPlaying }
     
     //MARK:- UI Helper Functions
+    // Below function set up controls as per the playing state passed.
     func setUpControlsForState(state: PlayingState){
         switch state {
         case .Playing:
@@ -25,6 +26,7 @@ extension PlaySoundsViewController{
         }
     }
     
+    // Below func enable/disable different buttons as per the bool.
     func setUpPlayButtons(enabled: Bool){
         snailButton.enabled = enabled;
         rabbitButton.enabled = enabled;
@@ -34,6 +36,7 @@ extension PlaySoundsViewController{
         reverbButton.enabled = enabled;
     }
     
+    // Helper func to show alert messages.
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: AlertMessages.DismissAlert, style: .Default, handler: nil))
@@ -42,6 +45,7 @@ extension PlaySoundsViewController{
     
     //MARK:- Audio Helper Functions
     
+    // Setting Up Audio
     func setupAudio() {
         // initialize (recording) audio file
         do {
@@ -52,6 +56,7 @@ extension PlaySoundsViewController{
         print("Audio has been setup")
     }
     
+    // Below function is responsible for playing modulated Sound.
     func playSound(rate rate: Float? = nil, pitch: Float? = nil, echo: Bool = false, reverb: Bool = false) {
         
         // initialize audio engine components
@@ -123,14 +128,10 @@ extension PlaySoundsViewController{
         // play the recording!
         audioPlayerNode.play()
     }
-
-    //MARK:- Utility Functions
-    func connectAudioNodes(nodes: AVAudioNode...) {
-        for x in 0..<nodes.count-1 {
-            audioEngine.connect(nodes[x], to: nodes[x+1], format: audioFile.processingFormat)
-        }
-    }
     
+    // Below function is called to stop Audio
+    // This is called from stopRecordingTapped Event as well as when playing audio 
+    // file is completed
     func stopAudio() {
         
         if let stopTimer = stopTimer {
@@ -148,8 +149,16 @@ extension PlaySoundsViewController{
             audioEngine.reset()
         }
     }
+
+    //MARK:- Utility Functions
+    func connectAudioNodes(nodes: AVAudioNode...) {
+        for x in 0..<nodes.count-1 {
+            audioEngine.connect(nodes[x], to: nodes[x+1], format: audioFile.processingFormat)
+        }
+    }
     
     //MARK:- Structure
+    //Below is the structures of messages required in this VC
     struct AlertMessages {
         static let DismissAlert = "Dismiss";
         static let AudioFileError = "Audio File Error";

@@ -29,18 +29,26 @@ class PlaySoundsViewController: UIViewController {
     @IBOutlet weak var stopPlayingButton:UIButton!;
     
     //MARK:- Enum
+    // ButtonType Enum to identify the Button Tap.
     enum ButtonType:Int {case Snail=2, Rabbit=4, Chipmunk=6, Vader=8, Echo=10, Reverb=12}
     
     //MARK:- Life Cycle Events
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Setting Up Title of VC
+        self.title = "Play Recording View";
         print(recordingURL);
-        // Do any additional setup after loading the view.
+        
+        // Setting Up Audio
         setupAudio()
     }
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated);
+        
+        // As soon as View is to Appear, we want to Setup our controls to
+        // NotPlaying State.
         setUpControlsForState(PlayingState.NotPlaying);
     }
     
@@ -50,11 +58,15 @@ class PlaySoundsViewController: UIViewController {
     }
     
     // MARK: - IBActions
+    //Below is the function called when various play buttons are tapped.
     @IBAction func playButtonTapped(sender: UIButton){
         
+        // Setting Controls for Playing State as play button is being tapped.
         setUpControlsForState(PlayingState.Playing);
         print("Tag of Button pressed is : \(sender.tag)");
         
+        // Switching based on the button Tapped.
+        // Each case call playSound with its special Value as parameter
         switch (ButtonType(rawValue: sender.tag)!) {
             case .Snail:
                 playSound(rate: 0.75)
@@ -71,6 +83,7 @@ class PlaySoundsViewController: UIViewController {
         }
     }
  
+    // Below func is triggered to stop playing
     @IBAction func stopPlayButtonTapped(sender: UIButton){
         stopAudio();
     }
