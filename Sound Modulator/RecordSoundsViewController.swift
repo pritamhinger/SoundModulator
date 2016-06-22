@@ -43,11 +43,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
         self.title = "Recording View";
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     //MARK:- IBActions
     
     //Below is the Function to be triggered when Recording Button is tapped.

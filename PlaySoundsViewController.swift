@@ -19,6 +19,9 @@ class PlaySoundsViewController: UIViewController {
     var stopTimer: NSTimer!;
     var recordedAudio: NSURL!;
     
+    // Adding below property to track if the playing is interrupted by User
+    var playInterrupted =  false;
+    
     //MARK:- IBOutlets
     @IBOutlet weak var snailButton:UIButton!;
     @IBOutlet weak var rabbitButton:UIButton!;
@@ -52,11 +55,6 @@ class PlaySoundsViewController: UIViewController {
         setUpControlsForState(PlayingState.NotPlaying);
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     // MARK: - IBActions
     //Below is the function called when various play buttons are tapped.
     @IBAction func playButtonTapped(sender: UIButton){
@@ -65,6 +63,8 @@ class PlaySoundsViewController: UIViewController {
         setUpControlsForState(PlayingState.Playing);
         print("Tag of Button pressed is : \(sender.tag)");
         
+        // Setting playInterrupted as false as this procedure is called to Play audio file
+        playInterrupted = false;
         // Switching based on the button Tapped.
         // Each case call playSound with its special Value as parameter
         switch (ButtonType(rawValue: sender.tag)!) {
@@ -85,6 +85,8 @@ class PlaySoundsViewController: UIViewController {
  
     // Below func is triggered to stop playing
     @IBAction func stopPlayButtonTapped(sender: UIButton){
+        // Setting PlayInterrupted to true as user has pressed Stop button to forcefully stop playing.
+        playInterrupted = true;
         stopAudio();
     }
 

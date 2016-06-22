@@ -114,8 +114,15 @@ extension PlaySoundsViewController{
             }
             
             // schedule a stop timer for when audio finishes playing
-            self.stopTimer = NSTimer(timeInterval: delayInSeconds, target: self, selector: #selector(PlaySoundsViewController.stopAudio), userInfo: nil, repeats: false)
-            NSRunLoop.mainRunLoop().addTimer(self.stopTimer!, forMode: NSDefaultRunLoopMode)
+            
+            // FIXING BUG IN SUBMISSION
+            // Adding timer to stop playing only when playing is not interrupted by User by pressing Stop button.
+            // When user is tapping Stop Playing button then we are calling StopAudio Procedure from the respective
+            // IBAction.
+            if (!self.playInterrupted){
+                self.stopTimer = NSTimer(timeInterval: delayInSeconds, target: self, selector: #selector(PlaySoundsViewController.stopAudio), userInfo: nil, repeats: false)
+                NSRunLoop.mainRunLoop().addTimer(self.stopTimer!, forMode: NSDefaultRunLoopMode)
+            }
         }
         
         do {
