@@ -23,3 +23,5 @@ $ cd SoundModulator
 Double click **Sound Modulator.xcodeproj** or open the project in Xcode
 
 ## License
+
+`SoundModulator` is released under an [MIT License] (https://opensource.org/licenses/MIT). See `License` for details
